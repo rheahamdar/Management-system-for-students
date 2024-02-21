@@ -1,18 +1,14 @@
 package com.managment.demo.repository;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.managment.demo.entity.User;
 
-import student_management_system.entity.User;
-import student_management_system.enums.UserRole;
+public interface UserRepository extends CrudRepository<User,Long>{
 
-@Repository
-public interface UserRepository extends JpaRepository<User,Long>{
-
-    User findByRole(UserRole admin);
-
-    Optional<User> findFirstByEmail(String email);
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    public User getUserByUsername(@Param("username") String username);
     
 }
